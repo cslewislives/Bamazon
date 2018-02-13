@@ -1,0 +1,23 @@
+{
+  "name": "bamazon",
+  "version": "1.0.0",
+  "description": "Amazon-esque CLI app",
+  "main": "bamazonCustomer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cslewislives/Bamazon.git"
+  },
+  "author": "Josh C.S. Lewis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cslewislives/Bamazon/issues"
+  },
+  "homepage": "https://github.com/cslewislives/Bamazon#readme",
+  "dependencies": {
+    "inquirer": "^5.1.0",
+    "mysql": "^2.15.0"
+  }
+}
