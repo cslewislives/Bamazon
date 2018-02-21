@@ -28,4 +28,5 @@ con.connect(err => {
         if (err) throw err;
         console.log('Number of records insert: ' + result.affectedRows);
     });
+    con.end()
 });
