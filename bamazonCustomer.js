@@ -1,3 +1,9 @@
+/**
+ * @file File for the Customer function of Bamazon 
+ * @author Joshua C.S. Lewis
+ * @version 1.0 
+*/
+
 var mysql = require('mysql');
 var inquirer = require('inquirer');
 const cTable = require('console.table');
@@ -25,10 +31,16 @@ inquirer.prompt([{
             if (err) throw err;
             printTable();
         });
+    } else {
+        console.log('\nGoodbye');
+        return;
     }
 });
 
-
+/** 
+ * @function printTable
+ * @description Prints the product table and runs the toBuy function
+ */
 function printTable() {
     con.query('SELECT * FROM products', (err, result) => {
         if (err) throw err;
@@ -38,6 +50,10 @@ function printTable() {
     });
 };
 
+/** 
+ * @function toBuy
+ * @description Asks user what they would like buy and how much then checks the database.
+ */
 function toBuy() {
     inquirer.prompt([{
             name: 'id',
@@ -48,17 +64,16 @@ function toBuy() {
             name: 'amount',
             message: 'How many would you like to buy?',
             validate: input => !isNaN(input)
-
         }
-    ]).then(({
-        id,
-        amount
-    }) => {
+    ]).then(({id, amount}) => {
         checkDB(id, amount);
     });
 };
 
-
+/** 
+ * @function checkDB
+ * @description Checks database for the quantity of items and if there is enough to buy. Then confirms the buy.
+ */
 function checkDB(id, amount) {
     con.query('SELECT * FROM products WHERE ?', {
         item_id: id
@@ -74,6 +89,10 @@ function checkDB(id, amount) {
     });
 };
 
+/** 
+ * @function confirmBuy
+ * @description If user confirms then updates amount of the item left. Shows user how much their total was. Runs the buyAgain function
+ */
 function confirmBuy(id, amount, info) {
     inquirer.prompt([{
         name: 'confirmBuy',
@@ -101,14 +120,16 @@ function confirmBuy(id, amount, info) {
     });
 };
 
+/** 
+ * @function buyAgain
+ * @description If user would like to purchase something else runs the printTable function again. Else ends the connection.
+ */
 function buyAgain() {
     inquirer.prompt([{
         name: 'again',
         type: 'confirm',
         message: 'Would you like to purchase something else?'
-    }]).then(({
-        again
-    }) => {
+    }]).then(({again}) => {
         if (again) {
             printTable();
         } else {
